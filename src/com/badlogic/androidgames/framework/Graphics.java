@@ -1,26 +1,41 @@
 package com.badlogic.androidgames.framework;
 
+import android.graphics.Paint;
+
 public interface Graphics {
-    public static enum PixmapFormat {
-        ARGB8888, ARGB4444, RGB565
-    }
+	public static enum PixmapFormat {
+		ARGB8888, ARGB4444, RGB565
+	}
 
-    public Pixmap newPixmap(String fileName, PixmapFormat format);
+	public Pixmap newPixmap(String fileName, PixmapFormat format);
 
-    public void clear(int color);
+	public void clear(int color);
 
-    public void drawPixel(int x, int y, int color);
+	public void drawPixel(int x, int y, int color);
 
-    public void drawLine(int x, int y, int x2, int y2, int color);
+	public void drawLine(int x, int y, int x2, int y2, int color);
 
-    public void drawRect(int x, int y, int width, int height, int color);
+	public void drawLine(int x, int y, int x2, int y2, int strokewidth,
+			int color);
 
-    public void drawPixmap(Pixmap pixmap, int x, int y, int srcX, int srcY,
-            int srcWidth, int srcHeight);
+	public void drawCircle(int cx, int cy, int cr, Paint circle_paint);
 
-    public void drawPixmap(Pixmap pixmap, int x, int y);
+	public void drawTextAlp(String line, float x, float y, Paint paint);
 
-    public int getWidth();
+	public void drawTextAlp(String line, float x, float y, int color, float size);
 
-    public int getHeight();
+	public void drawRect(int x, int y, int width, int height, int color);
+	
+	public void drawRect(int x, int y, int width, int height, int color, int alpha);
+
+	public void drawPixmap(Pixmap pixmap, int x, int y, int srcX, int srcY,
+			int srcWidth, int srcHeight);
+
+	public void drawPixmap(Pixmap pixmap, int x, int y);
+	
+	public void drawPixmap(Pixmap pixmap, int x, int y, int aplha);
+
+	public int getWidth();
+
+	public int getHeight();
 }

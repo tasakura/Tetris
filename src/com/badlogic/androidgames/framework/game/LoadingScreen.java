@@ -3,6 +3,7 @@ package com.badlogic.androidgames.framework.game;
 import com.badlogic.androidgames.framework.Game;
 import com.badlogic.androidgames.framework.Graphics;
 import com.badlogic.androidgames.framework.Screen;
+import com.badlogic.androidgames.framework.Graphics.PixmapFormat;
 
 public class LoadingScreen extends Screen {
 
@@ -13,6 +14,7 @@ public class LoadingScreen extends Screen {
 	@Override
 	public void update(float deltaTime) {
 		Graphics g = game.getGraphics();
+		Assets.buckground01 = g.newPixmap("buckground01.png", PixmapFormat.RGB565);
 		game.setScreen(new PlayScreen(game));
 	}
 

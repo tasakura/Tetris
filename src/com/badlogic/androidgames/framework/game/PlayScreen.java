@@ -17,9 +17,10 @@ public class PlayScreen extends Screen {
 		Ready, Running, Paused, GameOver
 	}
 
-	GameState state = GameState.Running;
+	GameState state = GameState.Ready;
 	World world;
-
+	int score = 0;
+	
 	public PlayScreen(Game game) {
 		super(game);
 		world = new World();
@@ -82,13 +83,29 @@ public class PlayScreen extends Screen {
 
 
 	private void drawReadyUI() {
+		Graphics g = game.getGraphics();
+		g.drawRect(0, 0, 481, 801, Color.BLACK, 255);
+		g.drawLine(0, 642, 480, 642, 5, Color.WHITE);
+		g.drawPixmap(Assets.buckground01, 0, 0);
 	}
 
 	private void drawRunningUI() {
 		Graphics g = game.getGraphics();
-		g.drawRect(0, 0, 481, 801, Color.WHITE);
+		g.drawPixmap(Assets.buckground01, 0, 0);
+		g.drawLine(0, 642, 480, 642, 5, Color.WHITE);
+		int _score = score;
+		int i;
+		for (i = 0; _score > 9; i++) {
+			if (_score / 10 < 10)
+				break;
+			else {
+				i++;
+				_score /= 10;
+			}
+		}
+		g.drawTextAlp("スコア:", 20, 700, Color.WHITE, 50);
+		g.drawTextAlp(""+score, 200 - i * 15, 700, Color.WHITE, 50);
 		world.draw(g);
-		Log.d("test04", "test04");
 	}
 	
 	private void drawPausedUI() {

@@ -7,6 +7,7 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory.Options;
+import android.graphics.Color;
 import android.graphics.Paint.Style;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -84,10 +85,39 @@ public class AndroidGraphics implements Graphics{
 		paint.setColor(color);
 		canvas.drawLine(x, y, x2, y2, paint);
 	}
+	
+	public void drawLine(int x, int y, int x2, int y2, int strokewidth, int color) {
+		paint.setColor(color);
+		paint.setStrokeWidth(strokewidth);
+		canvas.drawLine(x, y, x2, y2, paint);
+	}
+	
+	public void drawCircle(int cx, int cy, int cr, Paint circle_paint) {
+		canvas.drawCircle(cx, cy, cr, circle_paint);
+	}
+
+	public void drawTextAlp(String line, float x, float y, Paint paint) {
+		canvas.drawText(line, x, y, paint);
+	}
+	
+	public void drawTextAlp(String line, float x, float y, int color, float size) {
+		Paint paint = new Paint();
+		paint.setColor(color);
+		paint.setTextSize(size);
+		canvas.drawText(line, x, y, paint);
+	}
+	
 
 	public void drawRect(int x, int y, int width, int height, int color) {
 		paint.setColor(color);
 		paint.setStyle(Style.FILL);
+		canvas.drawRect(x, y, x+width-1, y+height-1, paint);
+	}
+	
+	public void drawRect(int x, int y, int width, int height, int color, int alpha) {
+		paint.setColor(color);
+		paint.setStyle(Style.FILL);
+		paint.setAlpha(alpha);
 		canvas.drawRect(x, y, x+width-1, y+height-1, paint);
 	}
 
@@ -108,6 +138,11 @@ public class AndroidGraphics implements Graphics{
 
 	public void drawPixmap(Pixmap pixmap, int x, int y) {
 		canvas.drawBitmap(((AndroidPixmap)pixmap).bitmap, x, y, null);
+	}
+	
+	public void drawPixmap(Pixmap pixmap, int x, int y, int alpha) {
+		paint.setAlpha(alpha);
+		canvas.drawBitmap(((AndroidPixmap)pixmap).bitmap, x, y, paint);
 	}
 
 	public int getWidth() {

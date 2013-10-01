@@ -34,13 +34,13 @@ public class World {
 		for (int y = 0; y < ROW; y++) {
 			for (int x = 0; x < COL; x++) {
 				// 壁を作る
-				if (x == 0 || x == COL - 1) {
-					fields[y][x] = 1;
-				} else if (y == ROW - 1) {
-					fields[y][x] = 1;
-				} else {
+//				if (x == 0 || x == COL - 1) {
+//					fields[y][x] = 1;
+//				} else if (y == ROW - 1) {
+//					fields[y][x] = 1;
+//				} else {
 					fields[y][x] = 0;
-				}
+//				}
 			}
 		}
 	}
@@ -49,7 +49,7 @@ public class World {
 		for (int y = 0; y < ROW; y++) {
 			for (int x = 0; x < COL; x++) {
 				if (fields[y][x] == 1) {
-					g.drawRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE,	TILE_SIZE, Color.BLUE);
+					g.drawRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE,	TILE_SIZE, Color.BLUE, 255);
 				}
 			}
 		}
