@@ -1,8 +1,10 @@
 package com.badlogic.androidgames.framework.game;
 
 import java.util.List;
+import java.util.Random;
 
 import android.graphics.Color;
+import android.graphics.Point;
 import android.util.Log;
 
 import com.badlogic.androidgames.framework.Game;
@@ -18,16 +20,24 @@ public class PlayScreen extends Screen {
 	}
 
 	GameState state = GameState.Ready;
-	World world;
 	int score = 0;
-	
+	private World world;
+	private Block block;
+	private Block newxtBlock;
+	private Random rand;
+	private int pos = 0;
+	private final int move_x = 50;
+
 	public PlayScreen(Game game) {
 		super(game);
+		rand = new Random();
 		world = new World();
+		block = createBlock(world);
 	}
 
 	@Override
 	public void update(float deltaTime) {
+		Log.d("update", "TEST01");
 		List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
 		game.getInput().getKeyEvents();
 		if (state == GameState.Ready)
@@ -41,7 +51,6 @@ public class PlayScreen extends Screen {
 		}
 	}
 
-
 	private void updateReady(List<TouchEvent> touchEvents, float deltaTime) {
 		if (touchEvents.size() > 0)
 			state = GameState.Running;
@@ -52,12 +61,51 @@ public class PlayScreen extends Screen {
 		for (int i = 0; i < len; i++) {
 			TouchEvent event = touchEvents.get(i);
 			if (event.type == TouchEvent.TOUCH_UP) {
-				if (event.x < 64 && event.y < 64) {
-//					state = GameState.GameOver;
-				}
+				if (pos + move_x < event.x)
+					block.move(Block.RIGHT, deltaTime);
+				else if (pos - move_x > event.x)
+					block.move(Block.LEFT, deltaTime);
+				else
+					block.turn();
+			} else if (event.type == TouchEvent.TOUCH_DOWN) {
+				pos = event.x;
 			}
 		}
 		world.update(deltaTime);
+		boolean isFixed = block.move(Block.DOWN, deltaTime);
+		if (isFixed) {
+			newxtBlock = createBlock(world);
+			block = newxtBlock;
+		}
+		world.delteLine();
+	}
+
+	private Block createBlock(World world) {
+		int blockNo = rand.nextInt(7);
+		Log.d("BlockNO = " + blockNo, "TEST04_PlayScreen");
+		switch (blockNo) {
+		case Block.BAR:
+			return new BarBlock(world);
+
+		case Block.Z_SHAPE:
+			return new ZShapeBlock(world);
+
+		case Block.SQUARE:
+			return new SquareBlock(world);
+
+		case Block.L_SHAPE:
+			return new LShapeBlock(world);
+
+		case Block.REVERRSE_Z_SHAPE:
+			return new ReverseZShapeBlock(world);
+
+		case Block.T_SHAPE:
+			return new TShapeBlock(world);
+
+		case Block.REVERSE_L_SHAPE:
+			return new ReverseLShapeBlock(world);
+		}
+		return null;
 	}
 
 	private void updateGameOver(List<TouchEvent> touchEvents) {
@@ -67,8 +115,9 @@ public class PlayScreen extends Screen {
 
 	private void updatePaused(List<TouchEvent> touchEvents) {
 		// TODO 自動生成されたメソッド・スタブ
-		
+
 	}
+
 	@Override
 	public void present(float deltaTime) {
 		if (state == GameState.Ready)
@@ -81,18 +130,22 @@ public class PlayScreen extends Screen {
 			drawGameOverUI();
 	}
 
-
 	private void drawReadyUI() {
 		Graphics g = game.getGraphics();
 		g.drawRect(0, 0, 481, 801, Color.BLACK, 255);
 		g.drawLine(0, 642, 480, 642, 5, Color.WHITE);
 		g.drawPixmap(Assets.buckground01, 0, 0);
+		g.drawTextAlp("Touch", 20, 350, Color.WHITE, 150);
 	}
 
 	private void drawRunningUI() {
 		Graphics g = game.getGraphics();
 		g.drawPixmap(Assets.buckground01, 0, 0);
 		g.drawLine(0, 642, 480, 642, 5, Color.WHITE);
+
+		world.draw(g);
+		block.draw(g);
+
 		int _score = score;
 		int i;
 		for (i = 0; _score > 9; i++) {
@@ -104,18 +157,28 @@ public class PlayScreen extends Screen {
 			}
 		}
 		g.drawTextAlp("スコア:", 20, 700, Color.WHITE, 50);
-		g.drawTextAlp(""+score, 200 - i * 15, 700, Color.WHITE, 50);
-		world.draw(g);
+		g.drawTextAlp("" + score, 200 - i * 15, 700, Color.WHITE, 50);
+
 	}
-	
+
 	private void drawPausedUI() {
 		// TODO 自動生成されたメソッド・スタブ
-		
+
 	}
 
 	private void drawGameOverUI() {
 		// TODO 自動生成されたメソッド・スタブ
 
+	}
+
+	// タップ時の当たり判定 目標がタップされた場合true、違う場合false
+	private boolean isBounds(TouchEvent event, int x, int y, int width,
+			int height) {
+		if (event.x > x && event.x < x + width - 1 && event.y > y
+				&& event.y < y + height - 1)
+			return true;
+		else
+			return false;
 	}
 
 	@Override
