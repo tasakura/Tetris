@@ -17,6 +17,7 @@ public class World {
 	private int fields[][];
 	// static final float TICK_DECREMENT = 0.05f;
 
+	private boolean gameover = false;
 	public boolean gameOver = false;
 	public int score = 0;
 
@@ -75,14 +76,20 @@ public class World {
 					if (newPos.y + i < 0) {
 						if (newPos.x + j <= 0 || newPos.x + j >= COL - 1) {
 							return false;
+						} else if(fields[0][newPos.x + j] == 1) {
+							gameover = true;
 						}
 					} else if (fields[newPos.y + i][newPos.x + j] == 1) {
 						return false;
-					}
+					} 
 				}
 			}
 		}
 		return true;
+	}
+
+	public boolean isGameover() {
+		return gameover;
 	}
 
 	// 落ち切ったブロックをボードに固定 pos=ブロックの位置 block=ブロック

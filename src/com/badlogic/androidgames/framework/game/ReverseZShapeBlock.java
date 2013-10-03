@@ -1,5 +1,6 @@
 package com.badlogic.androidgames.framework.game;
 
+import android.graphics.Color;
 import android.graphics.Point;
 
 public class ReverseZShapeBlock extends Block {
@@ -10,7 +11,7 @@ public class ReverseZShapeBlock extends Block {
 		block[1][1] = 1;
 		block[1][2] = 1;
 		block[2][2] = 1;
-
+		color = Color.GRAY;
 		pos = new Point(4, -4);
 	}
 

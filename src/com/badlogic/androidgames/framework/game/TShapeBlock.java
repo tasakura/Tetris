@@ -1,5 +1,6 @@
 package com.badlogic.androidgames.framework.game;
 
+import android.graphics.Color;
 import android.graphics.Point;
 
 public class TShapeBlock extends Block {
@@ -10,7 +11,7 @@ public class TShapeBlock extends Block {
 		block[2][0] = 1;
 		block[2][1] = 1;
 		block[2][2] = 1;
-
+		color = Color.RED;
 		pos = new Point(4, -4);
 	}
 

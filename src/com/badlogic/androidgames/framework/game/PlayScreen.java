@@ -26,7 +26,8 @@ public class PlayScreen extends Screen {
 	private Block newxtBlock;
 	private Random rand;
 	private int pos = 0;
-	private final int move_x = 50;
+	private final int move_x = 0;
+	private boolean flag = false;
 
 	public PlayScreen(Game game) {
 		super(game);
@@ -37,7 +38,6 @@ public class PlayScreen extends Screen {
 
 	@Override
 	public void update(float deltaTime) {
-		Log.d("update", "TEST01");
 		List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
 		game.getInput().getKeyEvents();
 		if (state == GameState.Ready)
@@ -60,18 +60,26 @@ public class PlayScreen extends Screen {
 		int len = touchEvents.size();
 		for (int i = 0; i < len; i++) {
 			TouchEvent event = touchEvents.get(i);
-			if (event.type == TouchEvent.TOUCH_UP) {
+			if (event.type == TouchEvent.TOUCH_DOWN) {
+				pos = event.x;
+				flag = true;
+			} else if (event.type == TouchEvent.TOUCH_UP && flag) {
+				if (flag) {
+					block.turn();
+					flag = false;
+				}
+				pos = -1;
+			} else if (event.type == TouchEvent.TOUCH_DRAGGED) {
 				if (pos + move_x < event.x)
 					block.move(Block.RIGHT, deltaTime);
-				else if (pos - move_x > event.x)
+				if (pos - move_x > event.x)
 					block.move(Block.LEFT, deltaTime);
-				else
-					block.turn();
-			} else if (event.type == TouchEvent.TOUCH_DOWN) {
 				pos = event.x;
+				flag = false;
 			}
 		}
 		world.update(deltaTime);
+		Log.d("test", "test");
 		boolean isFixed = block.move(Block.DOWN, deltaTime);
 		if (isFixed) {
 			newxtBlock = createBlock(world);
@@ -82,7 +90,6 @@ public class PlayScreen extends Screen {
 
 	private Block createBlock(World world) {
 		int blockNo = rand.nextInt(7);
-		Log.d("BlockNO = " + blockNo, "TEST04_PlayScreen");
 		switch (blockNo) {
 		case Block.BAR:
 			return new BarBlock(world);
@@ -132,16 +139,15 @@ public class PlayScreen extends Screen {
 
 	private void drawReadyUI() {
 		Graphics g = game.getGraphics();
-		g.drawRect(0, 0, 481, 801, Color.BLACK, 255);
-		g.drawLine(0, 642, 480, 642, 5, Color.WHITE);
-		g.drawPixmap(Assets.buckground01, 0, 0);
-		g.drawTextAlp("Touch", 20, 350, Color.WHITE, 150);
+		g.drawRect(0, 0, 481, 801, Color.WHITE);
+		g.drawLine(0, 642, 480, 642, 5, Color.BLACK);
+		g.drawTextAlp("Touch", 20, 350, Color.GRAY, 150);
 	}
 
 	private void drawRunningUI() {
 		Graphics g = game.getGraphics();
-		g.drawPixmap(Assets.buckground01, 0, 0);
-		g.drawLine(0, 642, 480, 642, 5, Color.WHITE);
+		g.drawRect(0, 0, 480, 800, Color.WHITE);
+		g.drawLine(0, 642, 480, 642, 5, Color.BLACK);
 
 		world.draw(g);
 		block.draw(g);
@@ -158,17 +164,16 @@ public class PlayScreen extends Screen {
 		}
 		g.drawTextAlp("スコア:", 20, 700, Color.WHITE, 50);
 		g.drawTextAlp("" + score, 200 - i * 15, 700, Color.WHITE, 50);
-
+		if (world.isGameover())
+			state = GameState.GameOver;
 	}
 
 	private void drawPausedUI() {
-		// TODO 自動生成されたメソッド・スタブ
-
 	}
 
 	private void drawGameOverUI() {
-		// TODO 自動生成されたメソッド・スタブ
-
+		Graphics g = game.getGraphics();
+		g.drawTextAlp("GameOver", 0, 350, Color.RED, 100);
 	}
 
 	// タップ時の当たり判定 目標がタップされた場合true、違う場合false

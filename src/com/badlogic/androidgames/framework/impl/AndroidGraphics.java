@@ -92,8 +92,15 @@ public class AndroidGraphics implements Graphics{
 		canvas.drawLine(x, y, x2, y2, paint);
 	}
 	
-	public void drawCircle(int cx, int cy, int cr, Paint circle_paint) {
-		canvas.drawCircle(cx, cy, cr, circle_paint);
+	public void drawCircle(int cx, int cy, int cr, int color) {
+		paint.setColor(color);
+		canvas.drawCircle(cx, cy, cr, paint);
+	}
+	
+	public void drawCircle(int cx, int cy, int cr, int color, int alpha) {
+		paint.setColor(color);
+		paint.setAlpha(alpha);
+		canvas.drawCircle(cx, cy, cr, paint);
 	}
 
 	public void drawTextAlp(String line, float x, float y, Paint paint) {

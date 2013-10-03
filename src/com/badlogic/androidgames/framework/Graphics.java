@@ -18,7 +18,9 @@ public interface Graphics {
 	public void drawLine(int x, int y, int x2, int y2, int strokewidth,
 			int color);
 
-	public void drawCircle(int cx, int cy, int cr, Paint circle_paint);
+	public void drawCircle(int cx, int cy, int cr, int Color);
+	
+	public void drawCircle(int cx, int cy, int cr, int Color, int alpha);
 
 	public void drawTextAlp(String line, float x, float y, Paint paint);
 
