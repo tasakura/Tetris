@@ -5,12 +5,11 @@ import java.util.Random;
 
 import android.graphics.Color;
 import android.graphics.Point;
-import android.util.Log;
+import android.view.MotionEvent;
 
 import com.badlogic.androidgames.framework.Game;
 import com.badlogic.androidgames.framework.Graphics;
 import com.badlogic.androidgames.framework.Input.TouchEvent;
-import com.badlogic.androidgames.framework.Pixmap;
 import com.badlogic.androidgames.framework.Screen;
 
 public class PlayScreen extends Screen {
@@ -25,12 +24,16 @@ public class PlayScreen extends Screen {
 	private Block block;
 	private Block newxtBlock;
 	private Random rand;
-	private int pos = 0;
-	private final int move_x = 0;
+	private final int interval_x = 30;
+	private final int interval_y = 30;
+	private Point old_pos;
+	private Point w_pos;
 	private boolean flag = false;
 
 	public PlayScreen(Game game) {
 		super(game);
+		old_pos = new Point(-1, -1);
+		w_pos = new Point(-1, -1);
 		rand = new Random();
 		world = new World();
 		block = createBlock(world);
@@ -60,26 +63,53 @@ public class PlayScreen extends Screen {
 		int len = touchEvents.size();
 		for (int i = 0; i < len; i++) {
 			TouchEvent event = touchEvents.get(i);
-			if (event.type == TouchEvent.TOUCH_DOWN) {
-				pos = event.x;
+			switch (event.type) {
+			case MotionEvent.ACTION_DOWN:
+				old_pos.x = event.x;
+				old_pos.y = event.y;
 				flag = true;
-			} else if (event.type == TouchEvent.TOUCH_UP && flag) {
-				if (flag) {
+				break;
+
+			case MotionEvent.ACTION_UP:
+				if(flag) {
 					block.turn();
-					flag = false;
+					old_pos.x = -1;
+					old_pos.y = -1;
 				}
-				pos = -1;
-			} else if (event.type == TouchEvent.TOUCH_DRAGGED) {
-				if (pos + move_x < event.x)
-					block.move(Block.RIGHT, deltaTime);
-				if (pos - move_x > event.x)
-					block.move(Block.LEFT, deltaTime);
-				pos = event.x;
-				flag = false;
+				break;
+
+			case MotionEvent.ACTION_MOVE:
+				if(0>old_pos.x-event.x) {
+					w_pos.x += -(old_pos.x-event.x);
+					if(w_pos.x>interval_x) {
+						w_pos.x -= interval_x;
+						block.move(Block.RIGHT, deltaTime);
+						flag = false;
+					}
+				}
+				else if(0<old_pos.x-event.x) {
+					w_pos.x += old_pos.x-event.x;
+					if(w_pos.x>interval_x) {
+						w_pos.x -= interval_x;
+						block.move(Block.LEFT, deltaTime);
+						flag = false;
+					}
+				} else if(0>old_pos.y-event.y) {
+					w_pos.y += -(old_pos.y-event.y);
+					if(w_pos.y>interval_y) {
+						w_pos.y -= interval_y;
+						block.Down(deltaTime);
+						flag = false;
+					}
+				} 
+				block.move(Block.DOWN, deltaTime);
+				old_pos.x = event.x;
+				old_pos.y = event.y;
+				break;
 			}
 		}
+
 		world.update(deltaTime);
-		Log.d("test", "test");
 		boolean isFixed = block.move(Block.DOWN, deltaTime);
 		if (isFixed) {
 			newxtBlock = createBlock(world);
@@ -162,8 +192,8 @@ public class PlayScreen extends Screen {
 				_score /= 10;
 			}
 		}
-		g.drawTextAlp("スコア:", 20, 700, Color.WHITE, 50);
-		g.drawTextAlp("" + score, 200 - i * 15, 700, Color.WHITE, 50);
+		g.drawTextAlp("スコア:", 20, 700, Color.RED, 50);
+		g.drawTextAlp("" + world.getScore(), 200 - i * 15, 700, Color.RED, 50);
 		if (world.isGameover())
 			state = GameState.GameOver;
 	}

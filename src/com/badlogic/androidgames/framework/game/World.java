@@ -50,7 +50,7 @@ public class World {
 		for (int y = 0; y < ROW; y++) {
 			for (int x = 0; x < COL; x++) {
 				if (fields[y][x] == 1 && !(y == ROW - 1)) {
-					g.drawRect((x-1) * TILE_SIZE, y * TILE_SIZE, TILE_SIZE,
+					g.drawRect((x - 1) * TILE_SIZE, y * TILE_SIZE, TILE_SIZE,
 							TILE_SIZE, Color.BLUE, 255);
 				}
 			}
@@ -76,12 +76,12 @@ public class World {
 					if (newPos.y + i < 0) {
 						if (newPos.x + j <= 0 || newPos.x + j >= COL - 1) {
 							return false;
-						} else if(fields[0][newPos.x + j] == 1) {
+						} else if (fields[0][newPos.x + j] == 1) {
 							gameover = true;
 						}
 					} else if (fields[newPos.y + i][newPos.x + j] == 1) {
 						return false;
-					} 
+					}
 				}
 			}
 		}
@@ -110,12 +110,14 @@ public class World {
 		for (int y = 0; y < ROW - 1; y++) {
 			int count = 0;
 			for (int x = 1; x < COL - 1; x++) {
-				if (fields[y][x] == 1)
+				if (fields[y][x] == 1) {
 					count++;
+				}
 			}
 			if (count == COL - 2) {
 				for (int x = 1; x < COL - 1; x++) {
 					fields[y][x] = 0;
+					if(x==COL-2) score++;
 				}
 				for (int ty = y; ty > 0; ty--) {
 					for (int tx = 1; tx < COL - 1; tx++) {
@@ -124,6 +126,10 @@ public class World {
 				}
 			}
 		}
+	}
+
+	public int getScore() {
+		return score;
 	}
 
 }
