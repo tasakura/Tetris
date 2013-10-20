@@ -10,7 +10,7 @@ import android.util.Log;
 
 public class World {
 	static final int COL = 14; // 横
-	static final int ROW = 17; // 縦
+	static final int ROW = 15; // 縦
 	static final int TILE_SIZE = 40; // マスのサイズ
 	static final int SCORE_INCREMENT = 10;
 	static final float TICK_INITIAL = 0.5f;
@@ -50,8 +50,7 @@ public class World {
 		for (int y = 0; y < ROW; y++) {
 			for (int x = 0; x < COL; x++) {
 				if (fields[y][x] == 1 && !(y == ROW - 1)) {
-					g.drawRect((x - 1) * TILE_SIZE, y * TILE_SIZE, TILE_SIZE,
-							TILE_SIZE, Color.BLUE, 255);
+					g.drawPixmap(Assets.block01, (x - 1) * TILE_SIZE, y * TILE_SIZE);
 				}
 			}
 		}
@@ -127,6 +126,19 @@ public class World {
 			}
 		}
 	}
+	
+	/**
+     * ブロックが積み上がってるか
+     * @return 最上行まで積み上がってたらtrue
+     */
+	  public boolean isStacked() {
+	        for (int x=1; x<COL-1; x++) {
+	            if (fields[0][x] == 1) {
+	                return true;
+	            }
+	        }
+	        return false;
+	    }
 
 	public int getScore() {
 		return score;

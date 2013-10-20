@@ -56,11 +56,8 @@ public class Block {
 		for (int i = 0; i < ROW; i++) {
 			for (int j = 0; j < COL; j++) {
 				if (block[i][j] == 1) {
-					g.drawRect(((pos.x - 1) + j) * TILE_SIZE, (pos.y + i)
-							* TILE_SIZE, TILE_SIZE, TILE_SIZE, color);
-					// g.drawCircle(((pos.x - 1) + j) * TILE_SIZE+13, (pos.y +
-					// i)
-					// * TILE_SIZE, 15, Color.BLACK);
+					g.drawPixmap(Assets.block01, ((pos.x - 1) + j) * TILE_SIZE,
+							(pos.y + i) * TILE_SIZE);
 				}
 			}
 		}
@@ -100,28 +97,6 @@ public class Block {
 		return false;
 	}
 
-//	public void Left(float deltaTime) {
-//		Point newPos;
-//		tickTime2 += deltaTime;
-//		while (tickTime2 > tick_2) {
-//			tickTime2 -= tick_2;
-//			newPos = new Point(pos.x - 1, pos.y);
-//			if (world.isMovable(newPos, block))
-//				pos = newPos;
-//		}
-//	}
-//
-//	public void Right(float deltaTime) {
-//		Point newPos;
-//		tickTime2 += deltaTime;
-//		while (tickTime2 > tick_2) {
-//			tickTime2 -= tick_2;
-//			newPos = new Point(pos.x + 1, pos.y);
-//			if (world.isMovable(newPos, block))
-//				pos = newPos;
-//		}
-//	}
-//
 	public boolean Down(float deltaTime) {
 		Point newPos;
 		tickTime2 += deltaTime;
@@ -134,6 +109,19 @@ public class Block {
 				world.fixBlock(pos, block);
 				return true;
 			}
+		}
+		return false;
+	}
+
+	public boolean Down() {
+		Point newPos;
+		tickTime2 = 0;
+		newPos = new Point(pos.x, pos.y + 1);
+		if (world.isMovable(newPos, block))
+			pos = newPos;
+		else {
+			world.fixBlock(pos, block);
+			return true;
 		}
 		return false;
 	}
