@@ -5,8 +5,6 @@ import com.badlogic.androidgames.framework.Pixmap;
 
 public class Assets {
 	public static Pixmap buckground01;
-	public static Pixmap block;
-	public static Pixmap block01;
 	public static Pixmap line;
 	public static Pixmap font_T80;
 	public static Pixmap font_O80;
@@ -40,4 +38,15 @@ public class Assets {
 	public static Pixmap font_745;
 	public static Pixmap font_845;
 	public static Pixmap font_945;
+
+	public static Pixmap block_Bar;
+	public static Pixmap block_LShape;
+	public static Pixmap block_RLShape;
+	public static Pixmap block_RZShape;
+	public static Pixmap block_Square;
+	public static Pixmap block_TShape;
+	public static Pixmap block_ZShape;
+
+	
+	
 }

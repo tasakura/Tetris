@@ -3,11 +3,9 @@ package com.badlogic.androidgames.framework.game;
 import java.util.Random;
 
 import com.badlogic.androidgames.framework.Graphics;
+import com.badlogic.androidgames.framework.Pixmap;
 
-import android.graphics.Color;
 import android.graphics.Point;
-import android.util.Log;
-
 public class World {
 	static final int COL = 14; // 横
 	static final int ROW = 15; // 縦
@@ -15,11 +13,13 @@ public class World {
 	static final int SCORE_INCREMENT = 10;
 	static final float TICK_INITIAL = 0.5f;
 	private int fields[][];
+	private int field_images[][];
 	// static final float TICK_DECREMENT = 0.05f;
 
 	private boolean gameover = false;
 	public boolean gameOver = false;
 	public int score = 0;
+	private Pixmap[] blockImage_list;
 
 	Random random = new Random();
 	float tickTime = 0;
@@ -28,7 +28,9 @@ public class World {
 
 	public World() {
 		fields = new int[ROW][COL];
+		field_images = new int[ROW][COL];
 		FomatFields();
+		init();
 	}
 
 	public void FomatFields() {
@@ -45,12 +47,23 @@ public class World {
 			}
 		}
 	}
+	
+	public void init() {
+		blockImage_list = new Pixmap[7];
+		blockImage_list[Block.REVERSE_L_SHAPE] = Assets.block_RLShape;
+		blockImage_list[Block.REVERRSE_Z_SHAPE] = Assets.block_RZShape;
+		blockImage_list[Block.SQUARE] = Assets.block_Square;
+		blockImage_list[Block.L_SHAPE] = Assets.block_LShape;
+		blockImage_list[Block.T_SHAPE] = Assets.block_TShape;
+		blockImage_list[Block.Z_SHAPE] = Assets.block_ZShape;
+		blockImage_list[Block.BAR] = Assets.block_Bar;
+	}
 
 	public void draw(Graphics g) {
 		for (int y = 0; y < ROW; y++) {
 			for (int x = 0; x < COL; x++) {
 				if (fields[y][x] == 1 && !(y == ROW - 1)) {
-					g.drawPixmap(Assets.block01, (x - 1) * TILE_SIZE, y * TILE_SIZE);
+					g.drawPixmap(blockImage_list[field_images[y][x]], (x - 1) * TILE_SIZE, y * TILE_SIZE);
 				}
 			}
 		}
@@ -92,13 +105,14 @@ public class World {
 	}
 
 	// 落ち切ったブロックをボードに固定 pos=ブロックの位置 block=ブロック
-	public void fixBlock(Point pos, int[][] block) {
+	public void fixBlock(Point pos, int[][] block, int imageNo) {
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
 				if (block[i][j] == 1) {
 					if (pos.y + i < 0)
 						continue;
 					fields[pos.y + i][pos.x + j] = 1;
+					field_images[pos.y+i][pos.x+j] = imageNo;
 				}
 			}
 		}

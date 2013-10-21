@@ -1,9 +1,9 @@
 package com.badlogic.androidgames.framework.game;
 
-import android.graphics.Color;
 import android.graphics.Point;
 
 public class BarBlock extends Block {
+	
 	public BarBlock(World world) {
 		super(world);
 		init();
@@ -11,7 +11,8 @@ public class BarBlock extends Block {
         block[1][1] = 1;
         block[2][1] = 1;
         block[3][1] = 1;
-        color = Color.MAGENTA;
+        image = Assets.block_Bar;
+        imageNo = Block.BAR;
         pos = new Point(4, -4);
 	}
 }

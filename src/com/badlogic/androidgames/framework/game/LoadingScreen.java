@@ -17,8 +17,6 @@ public class LoadingScreen extends Screen {
 	public void update(float deltaTime) {
 		Graphics g = game.getGraphics();
 		Assets.buckground01 = g.newPixmap("buckground01.png", PixmapFormat.RGB565);
-		Assets.block = g.newPixmap("block.png", PixmapFormat.ARGB4444);
-		Assets.block01 = g.newPixmap("block01.png", PixmapFormat.ARGB4444);
 		Assets.line = g.newPixmap("line01.png", PixmapFormat.ARGB4444);
 		Assets.font_T80 = g.newPixmap("font_T80.png", PixmapFormat.ARGB4444);
 		Assets.font_O80 = g.newPixmap("font_O80.png", PixmapFormat.ARGB4444);
@@ -53,6 +51,14 @@ public class LoadingScreen extends Screen {
 		Assets.image_Left = g.newPixmap("image_Left.png", PixmapFormat.ARGB4444);
 		Assets.image_Down = g.newPixmap("image_Down.png", PixmapFormat.ARGB4444);
 		Assets.bg_gameover = g.newPixmap("bg_gameover.png", PixmapFormat.ARGB4444);
+		
+		Assets.block_Bar = g.newPixmap("block_Bar.png", PixmapFormat.ARGB4444);
+		Assets.block_LShape = g.newPixmap("block_LShape.png", PixmapFormat.ARGB4444);
+		Assets.block_RLShape = g.newPixmap("block_RLShape.png", PixmapFormat.ARGB4444);
+		Assets.block_RZShape = g.newPixmap("block_RZShape.png", PixmapFormat.ARGB4444);
+		Assets.block_Square = g.newPixmap("block_Square.png", PixmapFormat.ARGB4444);
+		Assets.block_TShape = g.newPixmap("block_TShape.png", PixmapFormat.ARGB4444);
+		Assets.block_ZShape = g.newPixmap("block_ZShape.png", PixmapFormat.ARGB4444);
 		game.setScreen(new PlayScreen(game));
 	}
 

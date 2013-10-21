@@ -11,7 +11,8 @@ public class ReverseLShapeBlock extends Block {
 		block[0][2] = 1;
 		block[1][1] = 1;
 		block[2][1] = 1;
-		color = Color.YELLOW;
+		image = Assets.block_RLShape;
+		imageNo = Block.REVERSE_L_SHAPE;
 		pos = new Point(4, -4);
 	}
 

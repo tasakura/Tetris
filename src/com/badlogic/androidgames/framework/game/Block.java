@@ -1,16 +1,15 @@
 package com.badlogic.androidgames.framework.game;
 
 import com.badlogic.androidgames.framework.Graphics;
+import com.badlogic.androidgames.framework.Pixmap;
 
-import android.graphics.Color;
 import android.graphics.Point;
-import android.util.Log;
 
 public class Block {
 	public static final int ROW = 4;
 	public static final int COL = 4;
 
-	private static final int TILE_SIZE = 40;
+	private static final int TILE_SIZE = World.TILE_SIZE;
 
 	// 移動方向
 	public static final int LEFT = 0;
@@ -32,8 +31,10 @@ public class Block {
 	private static float tick_2 = TICK_INITIAL_2; // 更新速度
 	private float tickTime = 0;
 	private float tickTime2 = 0;
+	
+	protected Pixmap image;
+	protected int imageNo;
 
-	protected int color = Color.BLUE;
 	protected int[][] block = new int[ROW][COL]; // ブロックの形を格納
 	protected Point pos;
 	private World world;
@@ -41,6 +42,7 @@ public class Block {
 	public Block(World world) {
 		this.world = world;
 		init();
+		imageNo = 6;
 		pos = new Point(4, -4);
 	}
 
@@ -56,7 +58,7 @@ public class Block {
 		for (int i = 0; i < ROW; i++) {
 			for (int j = 0; j < COL; j++) {
 				if (block[i][j] == 1) {
-					g.drawPixmap(Assets.block01, ((pos.x - 1) + j) * TILE_SIZE,
+					g.drawPixmap(image, ((pos.x - 1) + j) * TILE_SIZE,
 							(pos.y + i) * TILE_SIZE);
 				}
 			}
@@ -90,7 +92,7 @@ public class Block {
 			if (world.isMovable(newPos, block))
 				pos = newPos;
 			else {
-				world.fixBlock(pos, block);
+				world.fixBlock(pos, block, imageNo);
 				return true;
 			}
 		}
@@ -106,7 +108,7 @@ public class Block {
 			if (world.isMovable(newPos, block))
 				pos = newPos;
 			else {
-				world.fixBlock(pos, block);
+				world.fixBlock(pos, block, imageNo);
 				return true;
 			}
 		}
@@ -120,7 +122,7 @@ public class Block {
 		if (world.isMovable(newPos, block))
 			pos = newPos;
 		else {
-			world.fixBlock(pos, block);
+			world.fixBlock(pos, block, imageNo);
 			return true;
 		}
 		return false;
@@ -154,4 +156,5 @@ public class Block {
 	public static int getCol() {
 		return COL;
 	}
+	
 }
