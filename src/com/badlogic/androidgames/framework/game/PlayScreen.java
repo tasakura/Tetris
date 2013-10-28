@@ -239,13 +239,12 @@ public class PlayScreen extends Screen {
 		if (w_y <= 100)
 			w_y += 20;
 		world.draw(g);
-		g.drawPixmap(Assets.bg_gameover, 10, w_y);
+//		g.drawPixmap(Assets.bg_gameover, 10, w_y);
 		for (int i = 0; i < fonts_gameover.length; i++) {
 			if (i < 4)
 				g.drawPixmap(fonts_gameover[i], 10 + (i * 95), 200);
 			else
 				g.drawPixmap(fonts_gameover[i], 10 + ((i - 3) * 95), 330);
-
 		}
 	}
 
@@ -265,8 +264,8 @@ public class PlayScreen extends Screen {
 			state = GameState.Paused;
 
 		if (world.gameOver) {
-			// Settings.addScore(world.score);
-			// Settings.save(game.getFileIO());
+			 utils.addScore(world.score);
+			 utils.save(game.getFileIO());
 		}
 	}
 
