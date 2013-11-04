@@ -59,8 +59,8 @@ public class LoadingScreen extends Screen {
 		Assets.block_Square = g.newPixmap("block_Square.png", PixmapFormat.ARGB4444);
 		Assets.block_TShape = g.newPixmap("block_TShape.png", PixmapFormat.ARGB4444);
 		Assets.block_ZShape = g.newPixmap("block_ZShape.png", PixmapFormat.ARGB4444);
-		game.setScreen(new PlayScreen(game));
-//		game.setScreen(new HighScoreRunking(game));
+		Assets.image_top = g.newPixmap("image_top.png", PixmapFormat.ARGB4444);
+		game.setScreen(new TopMenuScreen(game));
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package com.badlogic.androidgames.framework.game;
 
+import android.graphics.Color;
 import android.graphics.Point;
 
 public class BarBlock extends Block {
@@ -14,5 +15,6 @@ public class BarBlock extends Block {
         image = Assets.block_Bar;
         imageNo = Block.BAR;
         pos = new Point(4, -4);
+        color = Color.rgb(255,0,255);
 	}
 }

@@ -3,6 +3,7 @@ package com.badlogic.androidgames.framework.game;
 import com.badlogic.androidgames.framework.Graphics;
 import com.badlogic.androidgames.framework.Pixmap;
 
+import android.graphics.Color;
 import android.graphics.Point;
 
 public class Block {
@@ -34,6 +35,7 @@ public class Block {
 	
 	protected Pixmap image;
 	protected int imageNo;
+	protected int color = Color.BLACK;
 
 	protected int[][] block = new int[ROW][COL]; // ブロックの形を格納
 	protected Point pos;
@@ -58,8 +60,10 @@ public class Block {
 		for (int i = 0; i < ROW; i++) {
 			for (int j = 0; j < COL; j++) {
 				if (block[i][j] == 1) {
-					g.drawPixmap(image, ((pos.x - 1) + j) * TILE_SIZE,
-							(pos.y + i) * TILE_SIZE);
+					g.drawRect((((pos.x - 1) + j) * TILE_SIZE)+2,
+							((pos.y + i) * TILE_SIZE)+2,TILE_SIZE-2,TILE_SIZE-2, color, 200);
+//					g.drawPixmap(image, ((pos.x - 1) + j) * TILE_SIZE,
+//							(pos.y + i) * TILE_SIZE);
 				}
 			}
 		}

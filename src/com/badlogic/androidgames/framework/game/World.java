@@ -135,6 +135,7 @@ public class World {
 				for (int ty = y; ty > 0; ty--) {
 					for (int tx = 1; tx < COL - 1; tx++) {
 						fields[ty][tx] = fields[ty - 1][tx];
+						field_images[ty][tx] = field_images[ty-1][tx];
 					}
 				}
 			}

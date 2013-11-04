@@ -47,6 +47,6 @@ public class Assets {
 	public static Pixmap block_TShape;
 	public static Pixmap block_ZShape;
 
-	
+	public static Pixmap image_top;
 	
 }

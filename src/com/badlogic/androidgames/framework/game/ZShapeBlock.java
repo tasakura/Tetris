@@ -1,5 +1,6 @@
 package com.badlogic.androidgames.framework.game;
 
+import android.graphics.Color;
 import android.graphics.Point;
 
 public class ZShapeBlock extends Block {
@@ -13,6 +14,7 @@ public class ZShapeBlock extends Block {
         image = Assets.block_ZShape;
         imageNo = Block.Z_SHAPE;
         pos = new Point(4, -4);
+        color = Color.rgb(255,255,0);
 	}
 
 }

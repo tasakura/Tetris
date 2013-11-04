@@ -2,6 +2,8 @@ package com.badlogic.androidgames.framework.game;
 
 import java.util.List;
 import java.util.Random;
+
+import android.graphics.Color;
 import android.graphics.Point;
 import android.view.MotionEvent;
 
@@ -109,13 +111,13 @@ public class PlayScreen extends Screen {
 			// ボタン部分
 			switch (event.type) {
 			case MotionEvent.ACTION_DOWN:
-				if (isBounds(event, 0, 560, 112, 90))
+				if (isBounds(event, 119 * 0 + 4, 568, 115, 80))
 					block.move(Block.LEFT, deltaTime);
-				if (isBounds(event, 112, 560, 124, 90))
+				if (isBounds(event, 119 * 1 + 4, 568, 115, 80))
 					block.turn();
-				if (isBounds(event, 236, 560, 124, 90))
+				if (isBounds(event, 119 * 2 + 4, 568, 115, 80))
 					block.Down();
-				if (isBounds(event, 360, 560, 124, 90))
+				if (isBounds(event, 119 * 3 + 4, 568, 115, 80))
 					block.move(Block.RIGHT, deltaTime);
 				break;
 			}
@@ -185,27 +187,27 @@ public class PlayScreen extends Screen {
 	private void drawAlwaysUI() {
 		Graphics g = game.getGraphics();
 		g.drawPixmap(Assets.buckground01, 0, 0);
-		g.drawPixmap(Assets.line, 0, 562);
+		// g.drawPixmap(Assets.line, 0, 562);
 
 		// コントロール(ボタン)の描画
-		int width_cont = 60;// ボタンのサイズ
-		int margin = 65; // ボタンの間
-		int start_x = 20; // 配置開始位置
-		Pixmap[] controls = utils.madeF_Control();
-		for (int i = 0; i < controls.length; i++)
-			g.drawPixmap(controls[i], (width_cont + margin) * i + start_x, 570);
+		// int width_cont = 60;// ボタンのサイズ
+		// int margin = 65; // ボタンの間
+		// int start_x = 20; // 配置開始位置
+		// Pixmap[] controls = utils.madeF_Control();
+		// for (int i = 0; i < controls.length; i++)
+		// g.drawPixmap(controls[i], (width_cont + margin) * i + start_x, 570);
 
 		// 「SCORE」(文字)の描画
-		Pixmap[] fonts_score = utils.madeF_Score();
-		for (int i = 0; i < fonts_score.length; i++)
-			g.drawPixmap(fonts_score[i], (i * 45), 660);
+		// Pixmap[] fonts_score = utils.madeF_Score();
+		// for (int i = 0; i < fonts_score.length; i++)
+		// g.drawPixmap(fonts_score[i], (i * 45), 660);
 
 		// 「スコア」(点数)の描画
 		int[] list_score = utils.getScorelist(world.getScore());
 		int x_score = 435 - (45 * list_score.length - 1);
 		Pixmap[] fonts_number = utils.madeF_Number();
 		for (int i = 0; i < list_score.length; i++)
-			g.drawPixmap(fonts_number[list_score[i]], x_score + (i * 45), 660);
+			g.drawPixmap(fonts_number[list_score[i]], x_score + (i * 45)+10, 660);
 	}
 
 	private void drawReadyUI() {
@@ -222,10 +224,10 @@ public class PlayScreen extends Screen {
 		if (world.isGameover())
 			state = GameState.GameOver;
 		/*************** controlerに着色 *******************/
-		// g.drawRect(0, 560, 112, 90, Color.RED, 100);
-		// g.drawRect(112, 560, 124, 90, Color.BLUE, 100);
-		// g.drawRect(236, 560, 124, 90, Color.GREEN, 100);
-		// g.drawRect(360, 560, 124, 90, Color.YELLOW, 100);
+//		 g.drawRect(119*0+4, 568, 115, 80, Color.RED, 100);
+//		 g.drawRect(119*1+4, 568, 115, 80, Color.BLUE, 100);
+//		 g.drawRect(119*2+4, 568, 115, 80, Color.GREEN, 100);
+//		 g.drawRect(119*3+4, 568, 115, 80, Color.YELLOW, 100);
 		/************************************************/
 	}
 
@@ -239,7 +241,7 @@ public class PlayScreen extends Screen {
 		if (w_y <= 100)
 			w_y += 20;
 		world.draw(g);
-//		g.drawPixmap(Assets.bg_gameover, 10, w_y);
+		// g.drawPixmap(Assets.bg_gameover, 10, w_y);
 		for (int i = 0; i < fonts_gameover.length; i++) {
 			if (i < 4)
 				g.drawPixmap(fonts_gameover[i], 10 + (i * 95), 200);
@@ -264,8 +266,8 @@ public class PlayScreen extends Screen {
 			state = GameState.Paused;
 
 		if (world.gameOver) {
-			 utils.addScore(world.score);
-			 utils.save(game.getFileIO());
+			utils.addScore(world.score);
+			utils.save(game.getFileIO());
 		}
 	}
 

@@ -14,6 +14,7 @@ public class SquareBlock extends Block {
 		image = Assets.block_Square;
 		imageNo = Block.SQUARE;
 		pos = new Point(4, -4);
+		color = Color.rgb(153,51,0);
 	}
 
 }
