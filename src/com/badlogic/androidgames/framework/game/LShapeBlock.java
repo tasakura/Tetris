@@ -11,9 +11,7 @@ public class LShapeBlock extends Block {
 		block[1][1] = 1;
 		block[2][1] = 1;
 		block[2][2] = 1;
-		image = Assets.block_LShape;
 		imageNo = Block.L_SHAPE;
-		pos = new Point(4, -4);
 		color = Color.rgb(0,0,255);
 	}
 

@@ -3,6 +3,7 @@ package com.badlogic.androidgames.framework;
 import java.util.List;
 
 public interface Input {
+	
     public static class KeyEvent {
         public static final int KEY_DOWN = 0;
         public static final int KEY_UP = 1;

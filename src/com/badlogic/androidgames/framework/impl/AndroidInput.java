@@ -7,6 +7,8 @@ import android.os.Build.VERSION;
 import android.view.View;
 
 import com.badlogic.androidgames.framework.Input;
+import com.badlogic.androidgames.framework.Input.KeyEvent;
+import com.badlogic.androidgames.framework.Input.TouchEvent;
 
 public class AndroidInput implements Input {
 	AccelerometerHandoler accelHandler;		
@@ -22,41 +24,48 @@ public class AndroidInput implements Input {
 //			touchHandler = new MultiTouchHandler(view, scaleX, scaleY);
 	}
 	
-	
+
 	public boolean isKeyPressed(int keyCode) {
 		return keyHandler.isKeyPressed(keyCode);
 	}
 
+	
 	public boolean isTouchDown(int pointer) {
 		return touchHandler.isTouchDown(pointer);
 	}
 
+	
 	public int getTouchX(int pointer) {
 		return touchHandler.getTouchX(pointer);
 	}
 
+	
 	public int getTouchY(int pointer) {
-		return touchHandler.getTouchY(pointer);
+		return touchHandler.getTouchY(pointer);	
 	}
 
+	
 	public float getAccelX() {
-		return accelHandler.getAccelX();
+	return accelHandler.getAccelX();
 	}
-
+	
 	public float getAccelY() {
 		return accelHandler.getAccelY();
 	}
 
+	
 	public float getAccelZ() {
-		return accelHandler.getAccelZ();
+	return accelHandler.getAccelZ();
 	}
-
-	public List<KeyEvent> getKeyEvents() {
-		return keyHandler.getKeyEvents();
-	}
-
+	
 	public List<TouchEvent> getTouchEvents() {
 		return touchHandler.getTouchEvents();
 	}
+
+	
+	public List<KeyEvent> getKeyEvents() {
+		return keyHandler.getKeyEvents();
+	}		
+
 	
 }

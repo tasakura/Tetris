@@ -5,12 +5,11 @@ import com.badlogic.androidgames.framework.Pixmap;
 
 import android.graphics.Color;
 import android.graphics.Point;
+import android.util.Log;
 
 public class Block {
 	public static final int ROW = 4;
 	public static final int COL = 4;
-
-	private static final int TILE_SIZE = World.TILE_SIZE;
 
 	// 移動方向
 	public static final int LEFT = 0;
@@ -25,6 +24,7 @@ public class Block {
 	public static final int REVERRSE_Z_SHAPE = 4;
 	public static final int T_SHAPE = 5;
 	public static final int REVERSE_L_SHAPE = 6;
+	public static final int WALL = 7;
 
 	private static final float TICK_INITIAL = 0.5f;
 	private static final float TICK_INITIAL_2 = 0.01f;
@@ -32,11 +32,10 @@ public class Block {
 	private static float tick_2 = TICK_INITIAL_2; // 更新速度
 	private float tickTime = 0;
 	private float tickTime2 = 0;
-	
-	protected Pixmap image;
+
 	protected int imageNo;
 	protected int color = Color.BLACK;
-
+	private static final int TILE_SIZE = World.TILE_SIZE;
 	protected int[][] block = new int[ROW][COL]; // ブロックの形を格納
 	protected Point pos;
 	private World world;
@@ -45,7 +44,7 @@ public class Block {
 		this.world = world;
 		init();
 		imageNo = 6;
-		pos = new Point(4, -4);
+		pos = new Point(6, -4);
 	}
 
 	public void init() {
@@ -57,13 +56,15 @@ public class Block {
 	}
 
 	public void draw(Graphics g) {
-		for (int i = 0; i < ROW; i++) {
-			for (int j = 0; j < COL; j++) {
-				if (block[i][j] == 1) {
-					g.drawRect((((pos.x - 1) + j) * TILE_SIZE)+2,
-							((pos.y + i) * TILE_SIZE)+2,TILE_SIZE-2,TILE_SIZE-2, color, 200);
-//					g.drawPixmap(image, ((pos.x - 1) + j) * TILE_SIZE,
-//							(pos.y + i) * TILE_SIZE);
+		int y_margin = 82;
+		for (int y = 0; y < ROW; y++) {
+			for (int x = 0; x < COL; x++) {
+				if (block[y][x] == 1) {
+					if (pos.y + y > -1)
+						g.drawRect(5 + (((pos.x - 1) + x) * 1)
+								+ (((pos.x - 1) + x) * TILE_SIZE), y_margin
+								+ (pos.y + (y + 1)) * 1 + ((pos.y) + y)
+								* TILE_SIZE, TILE_SIZE, TILE_SIZE, color, 200);
 				}
 			}
 		}
@@ -160,5 +161,9 @@ public class Block {
 	public static int getCol() {
 		return COL;
 	}
-	
+
+	public static void setTick(float minus) {
+		Block.tick -= minus;
+		Log.d("tick", "" + tick);
+	}
 }

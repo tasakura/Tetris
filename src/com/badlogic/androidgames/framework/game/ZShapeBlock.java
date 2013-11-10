@@ -11,9 +11,7 @@ public class ZShapeBlock extends Block {
         block[1][2] = 1;
         block[1][1] = 1;
         block[2][1] = 1;
-        image = Assets.block_ZShape;
         imageNo = Block.Z_SHAPE;
-        pos = new Point(4, -4);
         color = Color.rgb(255,255,0);
 	}
 

@@ -11,9 +11,7 @@ public class TShapeBlock extends Block {
 		block[2][0] = 1;
 		block[2][1] = 1;
 		block[2][2] = 1;
-		image = Assets.block_TShape;
 		imageNo = Block.T_SHAPE;
-		pos = new Point(4, -4);
 		color = Color.rgb(102,0,153);
 	}
 

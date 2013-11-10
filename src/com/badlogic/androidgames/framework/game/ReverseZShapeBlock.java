@@ -11,9 +11,7 @@ public class ReverseZShapeBlock extends Block {
 		block[1][1] = 1;
 		block[1][2] = 1;
 		block[2][2] = 1;
-		image = Assets.block_RZShape;
 		imageNo = Block.REVERRSE_Z_SHAPE;
-		pos = new Point(4, -4);
         color = Color.rgb(255,102,0);
 	}
 

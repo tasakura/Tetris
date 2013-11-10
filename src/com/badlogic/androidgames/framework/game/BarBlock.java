@@ -12,9 +12,7 @@ public class BarBlock extends Block {
         block[1][1] = 1;
         block[2][1] = 1;
         block[3][1] = 1;
-        image = Assets.block_Bar;
         imageNo = Block.BAR;
-        pos = new Point(4, -4);
         color = Color.rgb(255,0,255);
 	}
 }
