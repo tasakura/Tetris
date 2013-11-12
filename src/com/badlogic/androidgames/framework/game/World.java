@@ -16,9 +16,10 @@ public class World {
 	private int field_images[][];
 	private int[] blockColor_list;
 
-	public int score = 12345;
+	public int score = 0;
 	public boolean gameOver = false;
 	private float tickTime = 0;
+	private double minus = 0.02;
 
 	public World() {
 		fields = new int[ROW][COL];
@@ -133,8 +134,7 @@ public class World {
 					fields[y][x] = 0;
 					if (x == COL - 2) {
 						score++;
-						int minus = (score + 1) / 1;
-						Block.setTick((float) 0.02 * minus);
+						Block.setTick((float) minus);
 					}
 				}
 				for (int ty = y; ty > 0; ty--) {

@@ -145,7 +145,7 @@ public class PlayScreen extends Screen {
 		world.delteLine();
 		if (world.isStacked()) {
 			state = GameState.GameOver;
-			Utils.addscore(game.getFileIO(), world.score);
+			Utils.addScore(game.getFileIO(), world.score);
 		}
 	}
 

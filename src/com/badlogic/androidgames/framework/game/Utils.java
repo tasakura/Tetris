@@ -11,18 +11,22 @@ public class Utils {
 	public static boolean soundEnabled = true;
 
 	public static void load(FileIO files) {
-		String sql = "create table score_data("+"_id integer primary key autoincrement," + "score integer default 0)";
-		files.CreateDBandTable(sql);
+		String sql = "create table score_data("
+				+ "_id integer primary key autoincrement,"
+				+ "score integer default 0)";
+		if (files.CreateDBandTable(sql))
+			for (int i = 0; i < 5; i++) 
+				addScore(files, 0);
 	}
 
-	public static boolean addscore(FileIO files, int score) {
+	public static boolean addScore(FileIO files, int score) {
 		ContentValues val = new ContentValues();
 		val.put("score", score);
 		return files.writeFile(val);
 	}
-	
+
 	public static String[][] readFile(FileIO files) {
-		String[] columns = { "score"};
+		String[] columns = { "score" };
 		String order = "score desc";
 		return files.readFile(columns, null, null, order, 5);
 	}
@@ -43,8 +47,8 @@ public class Utils {
 	}
 
 	public int[] getScorelist(int score) {
-		if(score==0) {
-			int[] list = new int[1]; 
+		if (score == 0) {
+			int[] list = new int[1];
 			list[0] = 0;
 			return list;
 		}
@@ -57,13 +61,11 @@ public class Utils {
 			w_list[count] = score % 10;
 			score /= 10;
 		}
-		
+
 		int list[] = new int[count];
-		for (int i = 0; count > 0; i++, count--) 
-			list[i] = w_list[count-1];
+		for (int i = 0; count > 0; i++, count--)
+			list[i] = w_list[count - 1];
 		return list;
 	}
-	
-	
-	
+
 }

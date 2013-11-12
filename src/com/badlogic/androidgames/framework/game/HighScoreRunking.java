@@ -47,7 +47,7 @@ public class HighScoreRunking extends Screen{
 			for (int j = 0; j < list[0].length && list[i][j] != null; j++) {
 				int[] list_score = utils.getScorelist(Integer.parseInt(list[i][j]));	
 				for (int k = 0; k < list_score.length; k++) {
-					g.drawPixmap(numbers[list_score[k]], 350-k*55, 70+160*i);
+					g.drawPixmap(numbers[list_score[k]], 370-k*55, 70+160*i);
 				}
 			}
 		}
