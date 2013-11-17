@@ -5,7 +5,6 @@ import java.util.Random;
 
 import android.graphics.Color;
 import android.graphics.Point;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import com.badlogic.androidgames.framework.Game;
@@ -136,7 +135,6 @@ public class PlayScreen extends Screen {
 			}
 		}
 
-		world.update(deltaTime);
 		boolean isFixed = block.move(Block.DOWN, deltaTime);
 		if (isFixed) {
 			nextBlock[0] = nextBlock[1];
@@ -251,6 +249,12 @@ public class PlayScreen extends Screen {
 		for (int i = 0; i < list_score.length; i++)
 			g.drawPixmap(fonts_number[list_score[i]], x_score + (i * 45) + 10,
 					25);
+
+		// Line
+		for (int i = 0; i < 13; i++) {
+			g.drawLine(5, 120 + (39 * i), 471, 120 + (39 * i), 1, Color.WHITE);
+			g.drawLine(42 + (39 * i), 81, 42 + (39 * i), 625, 1, Color.WHITE);
+		}
 	}
 
 	private void drawReadyUI() {
@@ -262,6 +266,7 @@ public class PlayScreen extends Screen {
 		Graphics g = game.getGraphics();
 		world.draw(g);
 		block.draw(g);
+
 		if (world.isGameover())
 			state = GameState.GameOver;
 

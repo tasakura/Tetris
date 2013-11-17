@@ -9,16 +9,12 @@ public class World {
 	static final int COL = 14; // 横
 	static final int ROW = 15; // 縦
 	static final int TILE_SIZE = 38; // マスのサイズ
-	static final int SCORE_INCREMENT = 10;
-	static final float TICK_INITIAL = 0.5f;
-	static float tick = TICK_INITIAL; // 更新速度
 	private int fields[][];
 	private int field_images[][];
 	private int[] blockColor_list;
 
 	public int score = 0;
 	public boolean gameOver = false;
-	private float tickTime = 0;
 	private double minus = 0.05;
 	private boolean flag_blockminus = false;
 
@@ -69,17 +65,6 @@ public class World {
 							blockColor_list[field_images[y][x]], 200);
 				}
 			}
-		}
-	}
-
-	public void update(float deltaTime) {
-		if (gameOver)
-			return;
-
-		tickTime += deltaTime;
-
-		while (tickTime > tick) {
-			tickTime -= tick;
 		}
 	}
 

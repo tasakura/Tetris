@@ -4,7 +4,6 @@ import com.badlogic.androidgames.framework.Graphics;
 
 import android.graphics.Color;
 import android.graphics.Point;
-import android.util.Log;
 
 public class Block {
 	public static final int ROW = 4;

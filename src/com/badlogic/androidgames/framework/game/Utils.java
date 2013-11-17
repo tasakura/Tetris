@@ -19,12 +19,14 @@ public class Utils {
 				+ "_id integer primary key autoincrement,"
 				+ "score integer default 0)";
 		if (files.CreateDBandTable(sql))
-			for (int i = 0; i < 5; i++) 
+			for (int i = 0; i < 5; i++)
 				addScore(files, 0);
 		BufferedReader in = null;
 		try {
-			in = new BufferedReader(new InputStreamReader(files.readSound(".tetris")));
+			in = new BufferedReader(new InputStreamReader(
+					files.readSound(".tetris")));
 			soundEnabled = Boolean.parseBoolean(in.readLine());
+			soundEnabled = true;
 		} catch (IOException e) {
 			// デフォルト設定があるのでエラーは無視
 		} catch (NumberFormatException e) {

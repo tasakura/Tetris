@@ -3,6 +3,7 @@ package com.badlogic.androidgames.framework.game;
 import java.util.List;
 
 import android.graphics.Color;
+import android.util.Log;
 
 import com.badlogic.androidgames.framework.Game;
 import com.badlogic.androidgames.framework.Graphics;
@@ -13,7 +14,7 @@ public class TopMenuScreen extends Screen {
 
 	public TopMenuScreen(Game game) {
 		super(game);
-		Utils.soundEnabled = true;
+		Log.d("Flag", ""+Utils.soundEnabled);
 	}
 
 	@Override
@@ -22,7 +23,6 @@ public class TopMenuScreen extends Screen {
 		game.getInput().getKeyEvents();
 
 		int len = touchEvents.size();
-
 		for (int i = 0; i < len; i++) {
 			TouchEvent event = touchEvents.get(i);
 			if (event.type == TouchEvent.TOUCH_UP) {
@@ -36,9 +36,13 @@ public class TopMenuScreen extends Screen {
 					if (Utils.soundEnabled)
 						Assets.sound_enter.play(1);
 				}
-				if (inBounds(event, 183, 644, 290, 150)) {
-					if (Utils.soundEnabled)
+				if (inBounds(event, 183, 644, 142, 644)) {
+					if (Utils.soundEnabled) 
+						Utils.soundEnabled = false;
+					else {
+						Utils.soundEnabled = true;
 						Assets.sound_enter.play(1);
+					}
 				}
 			}
 		}
@@ -49,11 +53,15 @@ public class TopMenuScreen extends Screen {
 	public void present(float deltaTime) {
 		Graphics g = game.getGraphics();
 		g.drawPixmap(Assets.image_top, 0, 0);
-		
-		/*touch判定*/
-//		g.drawRect(180, 315, 300, 155, Color.RED, 100);
-//		g.drawRect(180, 481, 300, 155, Color.RED, 100);
-//		g.drawRect(180, 644, 300, 155, Color.RED, 100);
+		if (Utils.soundEnabled)
+			g.drawPixmap(Assets.sound_on, 210, 660);
+		else 
+			g.drawPixmap(Assets.sound_off, 210, 660);
+		/* touch判定 */
+		// g.drawRect(180, 315, 300, 155, Color.RED, 100);
+		// g.drawRect(180, 481, 300, 155, Color.RED, 100);
+		// g.drawRect(180, 644, 300, 155, Color.RED, 100);
+		// g.drawRect(183, 644, 142, 644, Color.RED, 100);
 	}
 
 	private boolean inBounds(TouchEvent event, int x, int y, int width,

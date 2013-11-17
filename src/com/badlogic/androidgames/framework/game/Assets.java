@@ -23,6 +23,8 @@ public class Assets {
 	public static Pixmap Resume_button;
 	public static Pixmap tap_image;
 	public static Pixmap gameover_image;
+	public static Pixmap sound_on;
+	public static Pixmap sound_off;
 	
 	public static Sound sound_enter;
 	public static Sound sound_down;
