@@ -3,9 +3,7 @@ package com.badlogic.androidgames.framework.game;
 import java.util.List;
 import java.util.Random;
 
-import android.graphics.Color;
 import android.graphics.Point;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import com.badlogic.androidgames.framework.Game;
