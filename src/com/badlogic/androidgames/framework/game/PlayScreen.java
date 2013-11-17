@@ -253,7 +253,7 @@ public class PlayScreen extends Screen {
 		// Line
 		for (int i = 0; i < 13; i++) {
 			g.drawLine(5, 120 + (39 * i), 471, 120 + (39 * i), 1, Color.WHITE);
-			g.drawLine(42 + (39 * i), 81, 42 + (39 * i), 625, 1, Color.WHITE);
+			g.drawLine(42 + (39 * i), 81, 42 + (39 * i), 627, 1, Color.WHITE);
 		}
 	}
 
