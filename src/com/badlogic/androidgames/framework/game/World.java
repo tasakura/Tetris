@@ -109,8 +109,8 @@ public class World {
 
 	// 落ち切ったブロックをボードに固定 pos=ブロックの位置 block=ブロック
 	public void fixBlock(Point pos, int[][] block, int imageNo) {
-		for (int y = 0; y < 4; y++) {
-			for (int x = 0; x < 4; x++) {
+		for (int y = 0; y < Block.ROW; y++) {
+			for (int x = 0; x < Block.COL; x++) {
 				if (block[y][x] == 1) {
 					if (pos.y + y < 0)
 						continue;
@@ -126,19 +126,18 @@ public class World {
 		for (int y = 0; y < ROW - 1; y++) {
 			int count = 0;
 			for (int x = 1; x < COL - 1; x++) {
-				if (fields[y][x] == 1) {
+				if (fields[y][x] == 1)
 					count++;
-				}
 			}
 			if (count == COL - 2) {
 				for (int x = 1; x < COL - 1; x++) {
 					fields[y][x] = 0;
 					if (x == COL - 2) {
 						score++;
-						if(score%5==0&&flag_blockminus) {
+						if (score % 5 == 0 && flag_blockminus) {
 							Block.setTick((float) minus);
 							flag_blockminus = false;
-						}else{
+						} else {
 							flag_blockminus = true;
 						}
 					}

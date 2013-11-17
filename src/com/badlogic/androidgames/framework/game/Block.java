@@ -1,7 +1,6 @@
 package com.badlogic.androidgames.framework.game;
 
 import com.badlogic.androidgames.framework.Graphics;
-import com.badlogic.androidgames.framework.Pixmap;
 
 import android.graphics.Color;
 import android.graphics.Point;
@@ -26,12 +25,12 @@ public class Block {
 	public static final int REVERSE_L_SHAPE = 6;
 	public static final int WALL = 7;
 
-	private static final float TICK_INITIAL = 0.8f;
-	private static final float TICK_INITIAL_2 = 0.01f;
-	private static float tick = TICK_INITIAL; // 更新速度
-	private static float tick_2 = TICK_INITIAL_2; // 更新速度
-	private float tick_DownTime = 0;
-	private float tick_SlideTime = 0;
+	private static final float INITIAL_DOWN = 0.8f;
+	private static final float INITIAL_SLIDE = 0.01f;
+	private static float tick_DownTime = INITIAL_DOWN; // 更新速度
+	private static float tick_SlimeTime = INITIAL_SLIDE; // 更新速度
+	private float del_DownTime = 0;
+	private float del_SlideTime = 0;
 
 	protected int imageNo;
 	protected int color = Color.BLACK;
@@ -72,9 +71,9 @@ public class Block {
 
 	public boolean move(int dir, float deltaTime) {
 		Point newPos;
-		tick_SlideTime += deltaTime;
-		while (tick_SlideTime > tick_2) {
-			tick_SlideTime -= tick_2;
+		del_SlideTime += deltaTime;
+		while (del_SlideTime > tick_SlimeTime) {
+			del_SlideTime -= tick_SlimeTime;
 			switch (dir) {
 			case LEFT:
 				newPos = new Point(pos.x - 1, pos.y);
@@ -90,9 +89,9 @@ public class Block {
 			}
 		}
 
-		tick_DownTime += deltaTime;
-		while (tick_DownTime > tick) {
-			tick_DownTime -= tick;
+		del_DownTime += deltaTime;
+		while (del_DownTime > tick_DownTime) {
+			del_DownTime -= tick_DownTime;
 			newPos = new Point(pos.x, pos.y + 1);
 			if (world.isMovable(newPos, block)) {
 				pos = newPos;
@@ -102,21 +101,20 @@ public class Block {
 				world.fixBlock(pos, block, imageNo);
 				return true;
 			}
+			break;
 		}
 		return false;
 	}
 
-	
 	public boolean Down() {
 		Point newPos;
-		tick_SlideTime = 0;
+		del_SlideTime = 0;
 		newPos = new Point(pos.x, pos.y + 1);
 		if (world.isMovable(newPos, block)) {
 			pos = newPos;
 			if (Utils.soundEnabled)
 				Assets.sound_down.play(1);
 		} else {
-			world.fixBlock(pos, block, imageNo);
 			return true;
 		}
 		return false;
@@ -130,19 +128,20 @@ public class Block {
 	}
 
 	public void turn() {
-		int[][] turnedBlock = new int[ROW][COL];
-
-		// 回転したブロック
-		for (int i = 0; i < ROW; i++) {
-			for (int j = 0; j < COL; j++) {
-				turnedBlock[j][ROW - 1 - i] = block[i][j];
+		if (pos.y > -3) {
+			int[][] turnedBlock = new int[ROW][COL];
+			// 回転したブロック
+			for (int i = 0; i < ROW; i++) {
+				for (int j = 0; j < COL; j++) {
+					turnedBlock[j][ROW - 1 - i] = block[i][j];
+				}
 			}
-		}
-		// 回転可能か調べる
-		if (world.isMovable(pos, turnedBlock)) {
-			block = turnedBlock;
-			if (Utils.soundEnabled)
-				Assets.sound_turn.play(1);
+			// 回転可能か調べる
+			if (world.isMovable(pos, turnedBlock)) {
+				block = turnedBlock;
+				if (Utils.soundEnabled)
+					Assets.sound_turn.play(1);
+			}
 		}
 	}
 
@@ -155,7 +154,7 @@ public class Block {
 	}
 
 	public static void setTick(float minus) {
-		if (Block.tick > 0.07)
-			Block.tick -= minus;
+		if (Block.tick_DownTime > 0.07)
+			Block.tick_DownTime -= minus;
 	}
 }

@@ -3,7 +3,9 @@ package com.badlogic.androidgames.framework.game;
 import java.util.List;
 import java.util.Random;
 
+import android.graphics.Color;
 import android.graphics.Point;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import com.badlogic.androidgames.framework.Game;
@@ -68,13 +70,13 @@ public class PlayScreen extends Screen {
 		int len = touchEvents.size();
 		for (int i = 0; i < len; i++) {
 			TouchEvent event = touchEvents.get(i);
-			if (isBounds(event, 0, 0, 480, 554)) {
+			if (isBounds(event, 0, 80, 480, 554)) {
 				switch (event.type) {
 				case MotionEvent.ACTION_DOWN:
 					old_pos.x = event.x;
 					old_pos.y = event.y;
 					flag_onTouch = true;
-					break;
+					return;
 
 				case MotionEvent.ACTION_UP:
 					if (flag_onTouch) {
@@ -82,7 +84,7 @@ public class PlayScreen extends Screen {
 						old_pos.x = -1;
 						old_pos.y = -1;
 					}
-					break;
+					return;
 
 				case MotionEvent.ACTION_MOVE:
 					if (0 > old_pos.x - event.x) {
@@ -110,7 +112,7 @@ public class PlayScreen extends Screen {
 					block.move(Block.DOWN, deltaTime);
 					old_pos.x = event.x;
 					old_pos.y = event.y;
-					break;
+					return;
 				}
 			}
 
@@ -130,7 +132,7 @@ public class PlayScreen extends Screen {
 					if (Utils.soundEnabled)
 						Assets.sound_enter.play(1);
 				}
-				break;
+				return;
 			}
 		}
 
@@ -284,6 +286,7 @@ public class PlayScreen extends Screen {
 		// g.drawRect(117*1+4+2, 633, 115, 80, Color.BLUE, 100);
 		// g.drawRect(117*2+4+2, 633, 115, 80, Color.GREEN, 100);
 		// g.drawRect(117*3+4+2, 633, 115, 80, Color.YELLOW, 100);
+		// g.drawRect( 403, 6, 69, 69, Color.GRAY, 100);
 		/************************************************/
 	}
 
