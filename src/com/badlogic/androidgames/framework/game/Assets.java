@@ -1,6 +1,7 @@
 package com.badlogic.androidgames.framework.game;
 
 import com.badlogic.androidgames.framework.Pixmap;
+import com.badlogic.androidgames.framework.Sound;
 
 
 public class Assets {
@@ -22,4 +23,8 @@ public class Assets {
 	public static Pixmap Resume_button;
 	public static Pixmap tap_image;
 	public static Pixmap gameover_image;
+	
+	public static Sound sound_enter;
+	public static Sound sound_down;
+	public static Sound sound_turn;
 }

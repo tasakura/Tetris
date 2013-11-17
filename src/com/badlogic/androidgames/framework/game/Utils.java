@@ -1,5 +1,9 @@
 package com.badlogic.androidgames.framework.game;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import android.content.ContentValues;
 
 import com.badlogic.androidgames.framework.FileIO;
@@ -17,6 +21,21 @@ public class Utils {
 		if (files.CreateDBandTable(sql))
 			for (int i = 0; i < 5; i++) 
 				addScore(files, 0);
+		BufferedReader in = null;
+		try {
+			in = new BufferedReader(new InputStreamReader(files.readSound(".tetris")));
+			soundEnabled = Boolean.parseBoolean(in.readLine());
+		} catch (IOException e) {
+			// デフォルト設定があるのでエラーは無視
+		} catch (NumberFormatException e) {
+			// 同上
+		} finally {
+			try {
+				if (in != null)
+					in.close();
+			} catch (IOException e) {
+			}
+		}
 	}
 
 	public static boolean addScore(FileIO files, int score) {

@@ -33,6 +33,9 @@ public class LoadingScreen extends Screen {
 		Assets.Resume_button = g.newPixmap("Resume_button.png", PixmapFormat.ARGB4444);
 		Assets.tap_image = g.newPixmap("tap.png", PixmapFormat.ARGB4444);
 		Assets.gameover_image = g.newPixmap("gameover.png", PixmapFormat.ARGB4444);
+		Assets.sound_down = game.getAudio().newSound("sound_down.mp3");
+		Assets.sound_enter = game.getAudio().newSound("sound_enter.mp3");
+		Assets.sound_turn = game.getAudio().newSound("sound_turn.mp3");
 		Utils.load(game.getFileIO());
 		game.setScreen(new TopMenuScreen(game));
 	}

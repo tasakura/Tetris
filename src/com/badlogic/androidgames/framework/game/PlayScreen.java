@@ -105,7 +105,7 @@ public class PlayScreen extends Screen {
 						w_pos.y += -(old_pos.y - event.y);
 						if (w_pos.y > interval_y) {
 							w_pos.y -= interval_y;
-							block.Down(deltaTime);
+							block.Down();
 							flag_onTouch = false;
 						}
 					}
@@ -119,20 +119,22 @@ public class PlayScreen extends Screen {
 			// ボタン部分
 			switch (event.type) {
 			case MotionEvent.ACTION_DOWN:
-				if (isBounds(event, 117*0+6, 633, 115, 80))
+				if (isBounds(event, 117 * 0 + 6, 633, 115, 80))
 					block.move(Block.LEFT, deltaTime);
-				if (isBounds(event, 117*1+4+2, 633, 115, 80))
+				if (isBounds(event, 117 * 1 + 4 + 2, 633, 115, 80))
 					block.turn();
-				if (isBounds(event,117*2+4+2, 633, 115, 80))
+				if (isBounds(event, 117 * 2 + 4 + 2, 633, 115, 80))
 					block.Down();
-				if (isBounds(event, 117*3+4+2, 633, 115, 80))
+				if (isBounds(event, 117 * 3 + 4 + 2, 633, 115, 80))
 					block.move(Block.RIGHT, deltaTime);
-				if (isBounds(event, 403, 6, 69, 69))
+				if (isBounds(event, 403, 6, 69, 69)) {
 					state = GameState.Paused;
+					if (Utils.soundEnabled)
+						Assets.sound_enter.play(1);
+				}
 				break;
 			}
 		}
-
 
 		world.update(deltaTime);
 		boolean isFixed = block.move(Block.DOWN, deltaTime);
@@ -183,10 +185,16 @@ public class PlayScreen extends Screen {
 			TouchEvent event = touchEvents.get(i);
 			switch (event.type) {
 			case MotionEvent.ACTION_UP:
-				if (isBounds(event, 90, 450, 300, 80))
+				if (isBounds(event, 90, 450, 300, 80)) {
+					if (Utils.soundEnabled)
+						Assets.sound_enter.play(1);
 					game.setScreen(new PlayScreen(game));
-				if (isBounds(event, 90, 600, 300, 80))
+				}
+				if (isBounds(event, 90, 600, 300, 80)) {
+					if (Utils.soundEnabled)
+						Assets.sound_enter.play(1);
 					game.setScreen(new TopMenuScreen(game));
+				}
 				break;
 			}
 		}
@@ -198,12 +206,21 @@ public class PlayScreen extends Screen {
 			TouchEvent event = touchEvents.get(i);
 			switch (event.type) {
 			case MotionEvent.ACTION_UP:
-				if (isBounds(event, 90, 200, 300, 80))
+				if (isBounds(event, 90, 200, 300, 80)) {
+					if (Utils.soundEnabled)
+						Assets.sound_enter.play(1);
 					state = GameState.Running;
-				if (isBounds(event, 90, 350, 300, 80))
+				}
+				if (isBounds(event, 90, 350, 300, 80)) {
+					if (Utils.soundEnabled)
+						Assets.sound_enter.play(1);
 					game.setScreen(new PlayScreen(game));
-				if (isBounds(event, 90, 500, 300, 80))
+				}
+				if (isBounds(event, 90, 500, 300, 80)) {
+					if (Utils.soundEnabled)
+						Assets.sound_enter.play(1);
 					game.setScreen(new TopMenuScreen(game));
+				}
 				break;
 			}
 		}
@@ -248,15 +265,16 @@ public class PlayScreen extends Screen {
 		if (world.isGameover())
 			state = GameState.GameOver;
 
-		 int x_margin = 338;
-		 int y_margin = 25;
-		 int blocksize = 11;
+		int x_margin = 338;
+		int y_margin = 25;
+		int blocksize = 11;
 		/* 次のブロックの表示 */
 		for (int i = 1; i < nextBlock.length; i++) {
 			for (int y = 0; y < Block.ROW; y++) {
 				for (int x = 0; x < Block.COL; x++) {
 					if (nextBlock[i].block[y][x] == 1) {
-						g.drawRect(x_margin + x * (blocksize+1), y_margin + y * (blocksize+1), blocksize, blocksize,
+						g.drawRect(x_margin + x * (blocksize + 1), y_margin + y
+								* (blocksize + 1), blocksize, blocksize,
 								nextBlock[i].color, 200);
 					}
 				}
@@ -264,10 +282,10 @@ public class PlayScreen extends Screen {
 		}
 
 		/*************** controlerに着色 *******************/
-//		 g.drawRect(117*0+6, 633, 115, 80, Color.RED, 100);
-//		 g.drawRect(117*1+4+2, 633, 115, 80, Color.BLUE, 100);
-//		 g.drawRect(117*2+4+2, 633, 115, 80, Color.GREEN, 100);
-//		 g.drawRect(117*3+4+2, 633, 115, 80, Color.YELLOW, 100);
+		// g.drawRect(117*0+6, 633, 115, 80, Color.RED, 100);
+		// g.drawRect(117*1+4+2, 633, 115, 80, Color.BLUE, 100);
+		// g.drawRect(117*2+4+2, 633, 115, 80, Color.GREEN, 100);
+		// g.drawRect(117*3+4+2, 633, 115, 80, Color.YELLOW, 100);
 		/************************************************/
 	}
 

@@ -13,6 +13,7 @@ public class TopMenuScreen extends Screen {
 
 	public TopMenuScreen(Game game) {
 		super(game);
+		Utils.soundEnabled = true;
 	}
 
 	@Override
@@ -27,12 +28,17 @@ public class TopMenuScreen extends Screen {
 			if (event.type == TouchEvent.TOUCH_UP) {
 				if (inBounds(event, 180, 315, 290, 150)) {
 					game.setScreen(new PlayScreen(game));
+					if (Utils.soundEnabled)
+						Assets.sound_enter.play(1);
 				}
 				if (inBounds(event, 183, 481, 290, 150)) {
 					game.setScreen(new HighScoreRunking(game));
+					if (Utils.soundEnabled)
+						Assets.sound_enter.play(1);
 				}
 				if (inBounds(event, 183, 644, 290, 150)) {
-
+					if (Utils.soundEnabled)
+						Assets.sound_enter.play(1);
 				}
 			}
 		}

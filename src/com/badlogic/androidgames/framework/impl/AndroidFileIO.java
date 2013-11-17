@@ -22,9 +22,12 @@ public class AndroidFileIO implements FileIO {
 	Context con;
 	CreateProductHelper helper = null;
 	SQLiteDatabase db = null;
+	String externalStoragePath;
 
 	public AndroidFileIO(Context con) {
 		this.con = con;
+		this.externalStoragePath = Environment.getExternalStorageDirectory()
+				.getAbsolutePath() + File.separator;
 	}
 
 	public boolean CreateDBandTable(String sql) {
@@ -76,9 +79,10 @@ public class AndroidFileIO implements FileIO {
 		} finally {
 			db.close();
 		}
-//		if (list[0][1] == null)
-//			return null;
-//		else
 			return list;
+	}
+	
+	public InputStream readSound(String fileName) throws IOException {
+		return new FileInputStream(externalStoragePath + fileName);
 	}
 }

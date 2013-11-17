@@ -19,7 +19,8 @@ public class World {
 	public int score = 0;
 	public boolean gameOver = false;
 	private float tickTime = 0;
-	private double minus = 0.02;
+	private double minus = 0.05;
+	private boolean flag_blockminus = false;
 
 	public World() {
 		fields = new int[ROW][COL];
@@ -134,7 +135,12 @@ public class World {
 					fields[y][x] = 0;
 					if (x == COL - 2) {
 						score++;
-						Block.setTick((float) minus);
+						if(score%5==0&&flag_blockminus) {
+							Block.setTick((float) minus);
+							flag_blockminus = false;
+						}else{
+							flag_blockminus = true;
+						}
 					}
 				}
 				for (int ty = y; ty > 0; ty--) {

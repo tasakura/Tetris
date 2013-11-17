@@ -26,12 +26,12 @@ public class Block {
 	public static final int REVERSE_L_SHAPE = 6;
 	public static final int WALL = 7;
 
-	private static final float TICK_INITIAL = 0.5f;
+	private static final float TICK_INITIAL = 0.8f;
 	private static final float TICK_INITIAL_2 = 0.01f;
 	private static float tick = TICK_INITIAL; // 更新速度
 	private static float tick_2 = TICK_INITIAL_2; // 更新速度
-	private float tickTime = 0;
-	private float tickTime2 = 0;
+	private float tick_DownTime = 0;
+	private float tick_SlideTime = 0;
 
 	protected int imageNo;
 	protected int color = Color.BLACK;
@@ -72,9 +72,9 @@ public class Block {
 
 	public boolean move(int dir, float deltaTime) {
 		Point newPos;
-		tickTime2 += deltaTime;
-		while (tickTime2 > tick_2) {
-			tickTime2 -= tick_2;
+		tick_SlideTime += deltaTime;
+		while (tick_SlideTime > tick_2) {
+			tick_SlideTime -= tick_2;
 			switch (dir) {
 			case LEFT:
 				newPos = new Point(pos.x - 1, pos.y);
@@ -90,13 +90,15 @@ public class Block {
 			}
 		}
 
-		tickTime += deltaTime;
-		while (tickTime > tick) {
-			tickTime -= tick;
+		tick_DownTime += deltaTime;
+		while (tick_DownTime > tick) {
+			tick_DownTime -= tick;
 			newPos = new Point(pos.x, pos.y + 1);
-			if (world.isMovable(newPos, block))
+			if (world.isMovable(newPos, block)) {
 				pos = newPos;
-			else {
+				if (Utils.soundEnabled)
+					Assets.sound_down.play(1);
+			} else {
 				world.fixBlock(pos, block, imageNo);
 				return true;
 			}
@@ -104,29 +106,16 @@ public class Block {
 		return false;
 	}
 
-	public boolean Down(float deltaTime) {
-		Point newPos;
-		tickTime2 += deltaTime;
-		while (tickTime2 > tick_2) {
-			tickTime2 -= tick_2;
-			newPos = new Point(pos.x, pos.y + 1);
-			if (world.isMovable(newPos, block))
-				pos = newPos;
-			else {
-				world.fixBlock(pos, block, imageNo);
-				return true;
-			}
-		}
-		return false;
-	}
-
+	
 	public boolean Down() {
 		Point newPos;
-		tickTime2 = 0;
+		tick_SlideTime = 0;
 		newPos = new Point(pos.x, pos.y + 1);
-		if (world.isMovable(newPos, block))
+		if (world.isMovable(newPos, block)) {
 			pos = newPos;
-		else {
+			if (Utils.soundEnabled)
+				Assets.sound_down.play(1);
+		} else {
 			world.fixBlock(pos, block, imageNo);
 			return true;
 		}
@@ -150,8 +139,11 @@ public class Block {
 			}
 		}
 		// 回転可能か調べる
-		if (world.isMovable(pos, turnedBlock))
+		if (world.isMovable(pos, turnedBlock)) {
 			block = turnedBlock;
+			if (Utils.soundEnabled)
+				Assets.sound_turn.play(1);
+		}
 	}
 
 	public static int getRow() {
@@ -163,7 +155,7 @@ public class Block {
 	}
 
 	public static void setTick(float minus) {
-		Block.tick -= minus;
-		Log.d("tick", "" + tick);
+		if (Block.tick > 0.07)
+			Block.tick -= minus;
 	}
 }
